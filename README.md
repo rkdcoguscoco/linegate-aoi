@@ -1,4 +1,4 @@
- LineGate AOI
+# LineGate AOI
 
 > AI-Assisted First-Board Quality Gate for SMT Changeovers
 
