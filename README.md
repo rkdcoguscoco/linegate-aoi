@@ -1,6 +1,6 @@
 # LineGate AOI
 
-> AI-Assisted First-Board Quality Gate for SMT Changeovers
+> Multi-View AI Quality Inspection for SMT First Boards
 
 LineGate AOI는 **SMT 초품에 장착된 R0805 부품을 검사하는 AI 품질 검사 PoC**입니다. 상단 이미지(V1)로 부품의 실장 상태를, 좌우 경사 이미지(V2·V2.1)로 납땜 상태를 검사합니다. 세 시점의 결과를 종합해 RELEASE / HOLD / REVIEW를 권고하고, 작업자가 판정 근거를 확인해 최종 조치를 선택할 수 있도록 지원합니다.
 
