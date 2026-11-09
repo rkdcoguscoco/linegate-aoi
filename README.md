@@ -63,6 +63,65 @@ V1 / V2 / V2.1 검사 결과
 재작업 후 재검사, 추가 검사 요청** 중 최종 조치를 선택합니다.
 작업자 의견과 변경 사유를 기록하고, 승인 기록을 JSON으로 다운로드할 수 있습니다.
 
+## AI Classes
+
+### V1 — 부품 실장 상태
+
+| Official Class | Service Internal Label | Meaning |
+|---|---|---|
+| `good_BBBox` | `good` | 부품이 패드에 정상적으로 실장된 상태 |
+| `no_good_BBBox` | `no_good` | 부품 실장 상태가 정상 기준에서 벗어난 상태 |
+
+V1은 위치 이상 원인을 세부 클래스로 분리하지 않고,
+부품 본체와 패드 사이의 상대적인 위치·정렬 상태를 기준으로 정상/이상을 판별합니다.
+
+### V2 / V2.1 — 납땜 접합부 상태
+
+| Class | Meaning |
+|---|---|
+| `good` | 허용 가능한 정상 납땜 접합부 |
+| `exc_solder` | 납땜량이 과도하게 형성된 상태 |
+| `poor_solder` | 납땜량이 부족하거나 접합 상태가 불충분한 상태 |
+| `spike` | 납땜부에 뾰족한 돌출이 형성된 상태 |
+
+## Decision Policy
+
+LineGate는 V1만 먼저 판정하고 검사를 중단하지 않습니다.
+**V1, V2, V2.1 세 View 검사를 모두 수행한 뒤 결과를 종합**합니다.
+
+| Case | V1 실장 상태 | V2·V2.1 납땜 상태 | Final Decision |
+|---|---|---|---|
+| 1 | 정상 | 모두 정상 | **RELEASE** |
+| 2 | 이상 | 모두 정상 | **HOLD** |
+| 3 | 정상 | 하나 이상 이상 | **HOLD** |
+| 4 | 이상 | 하나 이상 이상 | **HOLD** |
+| 5 | 저신뢰도 / 결과 불확실 | 어느 View든 해당 | **REVIEW** |
+| 6 | 필수 View 누락 | 어느 View든 해당 | **REVIEW** |
+
+- **RELEASE**: 전체 3각도 검사 결과가 정상
+- **HOLD**: 실장 이상 또는 납땜 이상 검출
+- **REVIEW**: 저신뢰도, 판정 불확실 또는 필수 View 누락
+
+AI 결과는 최종 품질 결정을 자동 확정하는 것이 아니라,
+작업자가 Bounding Box / Polygon Mask Overlay와 판정 근거를 검토할 수 있도록 지원합니다.
+
+## Recommended Actions
+
+- **V1 위치 이상**
+  - 부품 실장 위치
+  - 장착 프로그램
+  - Setup 재확인
+
+- **poor_solder**
+  - 납땜 부족 여부 재검
+  - 보강 가능성 검토
+
+- **exc_solder**
+  - 과납 및 인접부 접촉 가능성 점검
+
+- **spike**
+  - 돌출 형상 및 주변 간섭 가능성 점검
+
 ## Final Models
 
 ### V1 — RF-DETR Small Object Detection
@@ -147,65 +206,6 @@ Seed를 42로 고정하고 이미지를 **Train / Validation / Test = 80 / 10 / 
 |---|---:|---:|---:|---:|---:|
 | V2 | 11 | 93.22% | 83.81% | 90.61% | 70.65% |
 | V2.1 | 15 | 91.63% | 86.24% | 95.25% | 79.53% |
-
-## AI Classes
-
-### V1 — 부품 실장 상태
-
-| Official Class | Service Internal Label | Meaning |
-|---|---|---|
-| `good_BBBox` | `good` | 부품이 패드에 정상적으로 실장된 상태 |
-| `no_good_BBBox` | `no_good` | 부품 실장 상태가 정상 기준에서 벗어난 상태 |
-
-V1은 위치 이상 원인을 세부 클래스로 분리하지 않고,
-부품 본체와 패드 사이의 상대적인 위치·정렬 상태를 기준으로 정상/이상을 판별합니다.
-
-### V2 / V2.1 — 납땜 접합부 상태
-
-| Class | Meaning |
-|---|---|
-| `good` | 허용 가능한 정상 납땜 접합부 |
-| `exc_solder` | 납땜량이 과도하게 형성된 상태 |
-| `poor_solder` | 납땜량이 부족하거나 접합 상태가 불충분한 상태 |
-| `spike` | 납땜부에 뾰족한 돌출이 형성된 상태 |
-
-## Decision Policy
-
-LineGate는 V1만 먼저 판정하고 검사를 중단하지 않습니다.
-**V1, V2, V2.1 세 View 검사를 모두 수행한 뒤 결과를 종합**합니다.
-
-| Case | V1 실장 상태 | V2·V2.1 납땜 상태 | Final Decision |
-|---|---|---|---|
-| 1 | 정상 | 모두 정상 | **RELEASE** |
-| 2 | 이상 | 모두 정상 | **HOLD** |
-| 3 | 정상 | 하나 이상 이상 | **HOLD** |
-| 4 | 이상 | 하나 이상 이상 | **HOLD** |
-| 5 | 저신뢰도 / 결과 불확실 | 어느 View든 해당 | **REVIEW** |
-| 6 | 필수 View 누락 | 어느 View든 해당 | **REVIEW** |
-
-- **RELEASE**: 전체 3각도 검사 결과가 정상
-- **HOLD**: 실장 이상 또는 납땜 이상 검출
-- **REVIEW**: 저신뢰도, 판정 불확실 또는 필수 View 누락
-
-AI 결과는 최종 품질 결정을 자동 확정하는 것이 아니라,
-작업자가 Bounding Box / Polygon Mask Overlay와 판정 근거를 검토할 수 있도록 지원합니다.
-
-## Recommended Actions
-
-- **V1 위치 이상**
-  - 부품 실장 위치
-  - 장착 프로그램
-  - Setup 재확인
-
-- **poor_solder**
-  - 납땜 부족 여부 재검
-  - 보강 가능성 검토
-
-- **exc_solder**
-  - 과납 및 인접부 접촉 가능성 점검
-
-- **spike**
-  - 돌출 형상 및 주변 간섭 가능성 점검
 
 ## Project Structure
 
