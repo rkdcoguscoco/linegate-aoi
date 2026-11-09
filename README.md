@@ -103,11 +103,11 @@ V1 최종 모델 클래스별 성능 지표는 다음과 같습니다.
 
 ### V2 / V2.1 — YOLO11s-seg Instance Segmentation
 
-V2와 V2.1은 동일한 클래스 체계를 공유하므로 하나의 데이터셋으로 통합해
-**YOLO11s-seg** 모델을 학습했습니다.
+V2와 V2.1은 동일한 납땜 상태 클래스를 사용합니다. 두 각도의 이미지를 하나의 데이터셋으로 통합하고, 공통 모델인 **YOLO11s-seg**를 학습했습니다.
 
-최종 학습에는 데이터 유효성 검토 후 **260장**을 사용했고,
-총 **627개 Polygon 객체**가 포함됐습니다.
+#### Dataset
+
+이미지 264장 중 유효성 검토를 거쳐 **260장**을 사용했습니다. 전체 데이터셋에는 **627개의 Polygon 어노테이션**이 포함됩니다.
 
 | Class | Polygon Objects |
 |---|---:|
@@ -117,7 +117,7 @@ V2와 V2.1은 동일한 클래스 체계를 공유하므로 하나의 데이터�
 | `spike` | 158 |
 | **Total** | **627** |
 
-데이터는 Seed 42를 고정해 Train / Validation / Test = **80 / 10 / 10**으로 분할했습니다.
+Seed를 42로 고정하고 이미지를 **Train / Validation / Test = 80 / 10 / 10**으로 분할했습니다.
 
 | Split | Images |
 |---|---:|
@@ -126,18 +126,24 @@ V2와 V2.1은 동일한 클래스 체계를 공유하므로 하나의 데이터�
 | Test | 26 |
 | **Total** | **260** |
 
-최종 YOLO11s-seg 모델의 Test Set 기준 Mask 성능은 다음과 같습니다.
+#### Test Results
+
+**전체 Test Set 26장**을 기준으로 평가한 Mask 성능입니다.
 
 | Metric | Result |
 |---|---:|
 | Mask Precision | 0.810 |
 | Mask Recall | 0.820 |
 | Mask mAP50 | 0.861 |
-| Mask mAP50-95 | 0.689 |
+| Mask mAP50–95 | 0.689 |
 
-View별 내부 Test Set 성능은 다음과 같습니다.
+기준 모델인 YOLO11n-seg와 비교해 Mask Precision은 소폭 낮아졌지만, **Mask Recall은 0.640에서 0.820으로 높아졌고** Mask mAP50–95도 개선되었습니다. 납땜 이상을 놓치는 경우를 줄이기 위해 재현율 개선을 우선해 YOLO11s-seg를 최종 모델로 선정했습니다.
 
-| View | Images | Mask Precision | Mask Recall | Mask mAP50 | Mask mAP50-95 |
+#### Results by View
+
+동일한 최종 모델을 사용해 Test Set을 **V2 11장**과 **V2.1 15장**으로 나누어 각각 평가했습니다.
+
+| View | Images | Mask Precision | Mask Recall | Mask mAP50 | Mask mAP50–95 |
 |---|---:|---:|---:|---:|---:|
 | V2 | 11 | 93.22% | 83.81% | 90.61% | 70.65% |
 | V2.1 | 15 | 91.63% | 86.24% | 95.25% | 79.53% |
