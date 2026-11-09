@@ -12,9 +12,9 @@ V2·V2.1의 양방향 경사 View에서는 납땜 접합부의 형상과 결함 
 ## Demo
 https://github-production-user-asset-6210df.s3.amazonaws.com/312392807/633385155-4c73f010-b160-40eb-bdb0-b33a755133c0.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260809%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260809T103050Z&X-Amz-Expires=300&X-Amz-Signature=3f72cf62f6d5a96417f4afda1645cf141a0fd85c1b1d3b6dad627106149ec062&X-Amz-SignedHeaders=host&response-content-type=video%2Fmp4
 
-> 동일 부품의 V1 / V2 / V2.1 이미지를 입력한 뒤,
-> AI 검사 → View별 결함 근거 확인 → RELEASE / HOLD / REVIEW 판정 →
-> Human Approval까지의 전체 흐름을 시연합니다.
+> 같은 부품을 촬영한 V1 / V2 / V2.1 이미지를 입력한 뒤,
+> AI 검사 → View별 판정 근거 확인 → RELEASE / HOLD / REVIEW 권고 →
+> 작업자 최종 검토 및 승인(Human Approval) 순으로 진행되는 전체 흐름을 시연합니다.
 
 ## System Architecture
 
