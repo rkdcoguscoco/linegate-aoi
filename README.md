@@ -2,9 +2,8 @@
 
 > AI-Assisted First-Board Quality Gate for SMT Changeovers
 
-LineGate AOI는 SMT 제품 또는 배치 전환 직후 제작되는 첫 생산품(First Board)의 R0805 부품을
-**V1 상단 View와 V2·V2.1 양방향 경사 View로 검사하고, 부품 실장 상태와 납땜 상태를 종합하여
-RELEASE / HOLD / REVIEW 권고를 제공하는 AI 품질 게이트 PoC**입니다.
+LineGate AOI는 SMT 공정의 첫 생산품을 대상으로
+**V1 상단 View와 V2·V2.1 양방향 경사 View로 다각도이미지에서 검사하고, 부품 실장 상태와 납땜 상태를 종합하여 RELEASE / HOLD / REVIEW 권고를 제공하는 AI 품질 게이트 PoC**입니다.
 
 본 프로젝트는 SolDef_AI의 Multi-view PCB 이미지 중 R0805 데이터를 활용합니다.
 V1은 부품 실장 상태 검사에, V2·V2.1은 좌·우 납땜 접합부 상태 검사에 사용하며,
