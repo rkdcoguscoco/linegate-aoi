@@ -5,6 +5,7 @@
 LineGate AOI는 **SMT 초품에 장착된 R0805 부품을 검사하는 AI 품질 검사 PoC**입니다. 상단 이미지(V1)로 부품의 실장 상태를, 좌우 경사 이미지(V2·V2.1)로 납땜 상태를 검사합니다. 세 시점의 결과를 종합해 RELEASE / HOLD / REVIEW를 권고하고, 작업자가 판정 근거를 확인해 최종 조치를 선택할 수 있도록 지원합니다.
 
 본 프로젝트는 SolDef_AI의 Multi-view PCB 이미지 중 R0805 데이터를 활용합니다.
+
 V1은 부품 전체의 위치 및 정렬 상태를 Bounding BOX 기반 Object Detection으로 검사하고, 
 V2·V2.1의 양방향 경사 View에서는 납땜 접합부의 형상과 결함 유형을 Polygon 기반 Instance Segmentation 으로 검사하며, V3는 본 모델 학습 범위에서 제외했습니다.
 
