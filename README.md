@@ -101,8 +101,6 @@ V1 최종 모델 클래스별 성능 지표는 다음과 같습니다.
 > 서비스는 Superb AI Deployment 응답에서 클래스명 끝부분(접미사)이 달라져도,
 > 판정 로직에 전달하기 전에 각각 good과 no_good으로 통일합니다.
 
-- YOLO11s-seg는 Baseline 대비 Precision은 일부 감소하였으나, 제조 검사에서 중요한 Recall이 0.640에서 0.820으로 증가하고 Mask mAP50-95 역시 개선되어 최종 모델로 선정하였습니다.
-
 ### V2 / V2.1 — YOLO11s-seg Instance Segmentation
 
 V2와 V2.1은 동일한 클래스 체계를 공유하므로 하나의 데이터셋으로 통합해
