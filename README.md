@@ -43,34 +43,27 @@ V1 / V2 / V2.1 검사 결과
 
 ## Main Features
 
-- **V1 실장 상태 검사**
-  - Superb AI에서 학습·배포한 **RF-DETR Small Object Detection**
-  - 부품 전체 영역을 Bounding Box로 검출
-  - `good_BBBox` / `no_good_BBBox` 판별
-  - BBox Overlay 및 Confidence 표시
+### 1. Multi-View Inspection
 
-- **V2 / V2.1 납땜 상태 검사**
-  - **YOLO11s-seg Instance Segmentation**
-  - `good`, `exc_solder`, `poor_solder`, `spike` 4개 클래스
-  - Polygon Mask Overlay 및 Confidence 표시
+| View | 검사 대상 | 모델 | 화면 표시 |
+|---|---|---|---|
+| **V1 · Top** | 부품 실장 상태 | RF-DETR Small · Object Detection | Bounding Box + Confidence |
+| **V2 · Left / V2.1 · Right** | 좌우 납땜 접합부 | YOLO11s-seg · Instance Segmentation | Polygon Mask + Confidence |
 
-- **3각도 통합 검사**
-  - V1 실장 상태 + V2 좌측 납땜 + V2.1 우측 납땜 결과를 모두 확인
-  - 특정 View에서 결함이 검출되더라도 나머지 View 검사를 계속 수행해 결함 근거를 구체화
+- **V1** — 정상(`good_BBBox`), 실장 이상(`no_good_BBBox`)
+- **V2 / V2.1** — 정상(`good`), 과납(`exc_solder`), 납땜 부족(`poor_solder`), 돌기(`spike`)
 
-- **최종 로트 판정**
-  - RELEASE / HOLD / REVIEW
-  - 판정 사유 및 View별 근거 제공
-  - 작업자용 권장 조치 안내
+### 2. AI Decision Support
 
-- **Human Approval**
-  - AI 권고 승인
-  - 예외 RELEASE 승인
-  - HOLD 유지
-  - REWORK 후 재검
-  - 추가 검사 요청
-  - 검사자 의견 및 변경 사유 기록
-  - 승인 기록 JSON 다운로드
+한 각도에서 결함이 검출돼도 세 각도의 검사를 모두 진행합니다.
+결과를 종합해 **`RELEASE`(진행) / `HOLD`(보류) / `REVIEW`(추가 검토)** 중 하나를 권고하고,
+각도별 판정 근거와 권장 후속 조치를 표시합니다.
+
+### 3. Human Approval
+
+작업자가 AI 권고와 검사 근거를 확인한 뒤 **권고 승인, 예외 진행 승인, 보류 유지,
+재작업 후 재검사, 추가 검사 요청** 중 최종 조치를 선택합니다.
+작업자 의견과 변경 사유를 기록하고, 승인 기록을 JSON으로 다운로드할 수 있습니다.
 
 ## Final Models
 
