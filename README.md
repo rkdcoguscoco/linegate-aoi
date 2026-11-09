@@ -97,11 +97,11 @@ V1 최종 모델 클래스별 성능 지표는 다음과 같습니다.
 | `no_good_BBBox` | 90.9% | 71.4% | 80.0% | 14 |
 | `good_BBBox` | 75.0% | 92.3% | 82.8% | 13 |
 
-> 서비스 코드에서는 Superb AI Deployment가 반환하는 클래스명 접미사 변형을 처리한 뒤,
-> 내부 판정 로직에서 `good` / `no_good`으로 정규화하여 사용합니다.
-> 학습·보고서 기준 공식 클래스명은 `good_BBBox` / `no_good_BBBox`입니다.
+> V1 모델의 학습과 보고서에서는 good_BBBox와 no_good_BBBox를 공식 클래스명으로 사용합니다.
+> 서비스는 Superb AI Deployment 응답에서 클래스명 끝부분(접미사)이 달라져도,
+> 판정 로직에 전달하기 전에 각각 good과 no_good으로 통일합니다.
 
-- YOLO11s-seg는 Baseline 대비 Precision은 일부 감소하였으나, 제조 검사에서 중요한 Recall이 0.640에서 0.820으로 증가하고 Mask mAP50-95 역시 개선되어 최종 모델로 선정하였다.
+- YOLO11s-seg는 Baseline 대비 Precision은 일부 감소하였으나, 제조 검사에서 중요한 Recall이 0.640에서 0.820으로 증가하고 Mask mAP50-95 역시 개선되어 최종 모델로 선정하였습니다.
 
 ### V2 / V2.1 — YOLO11s-seg Instance Segmentation
 
