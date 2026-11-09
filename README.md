@@ -18,8 +18,6 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/312392807/633385155
 
 ## System Architecture
 
-## System Architecture
-
 ```text
 V1 · 상단 이미지
   └─ 부품 실장 상태 검사
