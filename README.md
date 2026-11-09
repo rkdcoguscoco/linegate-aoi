@@ -92,7 +92,7 @@ V1은 초기에는 Polygon 기반 Instance Segmentation으로 학습했으나,
 | mAP@50 | 0.746 |
 | Evaluation Confidence Threshold | 0.56 |
 
-클래스별 성능은 다음과 같습니다.
+V1 최종 모델 클래스별 성능 지표는 다음과 같습니다.
 
 | Class | Precision | Recall | F1-score | Test Instance |
 |---|---:|---:|---:|---:|
@@ -102,6 +102,8 @@ V1은 초기에는 Polygon 기반 Instance Segmentation으로 학습했으나,
 > 서비스 코드에서는 Superb AI Deployment가 반환하는 클래스명 접미사 변형을 처리한 뒤,
 > 내부 판정 로직에서 `good` / `no_good`으로 정규화하여 사용합니다.
 > 학습·보고서 기준 공식 클래스명은 `good_BBBox` / `no_good_BBBox`입니다.
+
+- YOLO11s-seg는 Baseline 대비 Precision은 일부 감소하였으나, 제조 검사에서 중요한 Recall이 0.640에서 0.820으로 증가하고 Mask mAP50-95 역시 개선되어 최종 모델로 선정하였다.
 
 ### V2 / V2.1 — YOLO11s-seg Instance Segmentation
 
