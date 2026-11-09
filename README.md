@@ -16,29 +16,6 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/312392807/633385155
 > AI 검사 → View별 판정 근거 확인 → RELEASE / HOLD / REVIEW 권고 →
 > 작업자 최종 검토 및 승인(Human Approval) 순으로 진행되는 전체 흐름을 시연합니다.
 
-## System Architecture
-
-```text
-V1 · 상단 이미지
-  └─ 부품 실장 상태 검사
-     └─ Superb AI Deployment · RF-DETR Small (Object Detection)
-        ├─ good_BBBox · 정상 실장
-        └─ no_good_BBox · 실장 이상
-
-V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
-  └─ 좌우 납땜 접합부 검사
-     └─ FastAPI · YOLO11s-seg (Instance Segmentation)
-        ├─ good · 정상
-        ├─ exc_solder · 과납
-        ├─ poor_solder · 납땜 부족
-        └─ spike · 돌기
-
-V1 / V2 / V2.1 검사 결과
-  └─ LineGate 판정 로직으로 종합
-     └─ AI 권고 · RELEASE / HOLD / REVIEW
-        └─ 작업자가 판정 근거를 검토하고 최종 조치 선택
-```
-
 ## Main Features
 
 ### 1. Multi-View Inspection
@@ -62,6 +39,29 @@ V1 / V2 / V2.1 검사 결과
 작업자가 AI 권고와 검사 근거를 확인한 뒤 **권고 승인, 예외 진행 승인, 보류 유지,
 재작업 후 재검사, 추가 검사 요청** 중 최종 조치를 선택합니다.
 작업자 의견과 변경 사유를 기록하고, 승인 기록을 JSON으로 다운로드할 수 있습니다.
+
+## System Architecture
+
+```text
+V1 · 상단 이미지
+  └─ 부품 실장 상태 검사
+     └─ Superb AI Deployment · RF-DETR Small (Object Detection)
+        ├─ good_BBBox · 정상 실장
+        └─ no_good_BBox · 실장 이상
+
+V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
+  └─ 좌우 납땜 접합부 검사
+     └─ FastAPI · YOLO11s-seg (Instance Segmentation)
+        ├─ good · 정상
+        ├─ exc_solder · 과납
+        ├─ poor_solder · 납땜 부족
+        └─ spike · 돌기
+
+V1 / V2 / V2.1 검사 결과
+  └─ LineGate 판정 로직으로 종합
+     └─ AI 권고 · RELEASE / HOLD / REVIEW
+        └─ 작업자가 판정 근거를 검토하고 최종 조치 선택
+```
 
 ## AI Classes
 
