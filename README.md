@@ -18,26 +18,27 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/312392807/633385155
 
 ## System Architecture
 
+## System Architecture
+
 ```text
-V1 Top View · 부품 실장 상태
-  └─ Superb AI Platform / Deployment
-     └─ RF-DETR Small Object Detection
-        ├─ good_BBBox
-        └─ no_good_BBBox
+V1 · 상단 이미지
+  └─ 부품 실장 상태 검사
+     └─ Superb AI Deployment · RF-DETR Small (Object Detection)
+        ├─ good_BBBox · 정상 실장
+        └─ no_good_BBox · 실장 이상
 
-V2 Left View · 좌측 납땜
-V2.1 Right View · 우측 납땜
-  └─ Local FastAPI
-     └─ YOLO11s-seg Instance Segmentation
-        ├─ good
-        ├─ exc_solder
-        ├─ poor_solder
-        └─ spike
+V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
+  └─ 좌우 납땜 접합부 검사
+     └─ FastAPI · YOLO11s-seg (Instance Segmentation)
+        ├─ good · 정상
+        ├─ exc_solder · 과납
+        ├─ poor_solder · 납땜 부족
+        └─ spike · 돌기
 
-V1 + V2 + V2.1 검사 결과
-  └─ LineGate Decision Logic
-     └─ RELEASE / HOLD / REVIEW
-        └─ Human Approval
+V1 / V2 / V2.1 검사 결과
+  └─ LineGate 판정 로직으로 종합
+     └─ AI 권고 · RELEASE / HOLD / REVIEW
+        └─ 작업자가 판정 근거를 검토하고 최종 조치 선택
 ```
 
 ## Main Features
