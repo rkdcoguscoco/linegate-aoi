@@ -22,9 +22,7 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/312392807/633385155
 
 ### V1 — RF-DETR Small Object Detection
 
-V1은 초기에는 Polygon 기반 Instance Segmentation으로 학습했으나,
-부품 외곽의 정밀 분할보다 **부품 단위의 정상/이상 판별**이 핵심 목적이라는 점을 반영해
-최종적으로 Bounding Box 기반 Object Detection으로 전환했습니다.
+V1은 초기 Polygon 기반 Instance Segmentation을 적용했으나, 검사 목적이 부품의 정밀한 영역 분할보다는 **실장 상태의 정상 여부를 판별하는 것**에 있다는 점을 고려하여 최종적으로 Bounding Box 기반 Object Detection 방식을 채택했습니다.
 
 최종 V1 학습 데이터는 다음과 같습니다.
 
