@@ -32,7 +32,7 @@ V1은 초기 Polygon 기반 Instance Segmentation을 적용했으나, 검사 목
 | `no_good_BBBox` | 139 |
 | **Total** | **268** |
 
-최종 모델은 **RF-DETR Small**이며, 별도 Test Set 27장 기준 성능은 다음과 같습니다.
+최종 선정된 RF-DETR Small 모델의 성능을 별도의 테스트 데이터 27장을 기준으로 평가한 결과는 다음과 같습니다.
 
 | Metric | Result |
 |---|---:|
