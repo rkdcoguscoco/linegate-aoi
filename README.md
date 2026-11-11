@@ -103,18 +103,6 @@ Seed를 42로 고정하고 이미지를 **Train / Validation / Test = 80 / 10 / 
 | V2 | 11 | 93.22% | 83.81% | 90.61% | 70.65% |
 | V2.1 | 15 | 91.63% | 86.24% | 95.25% | 79.53% |
 
-## Inspection Flow
-
-1. 생산 라인 및 배치 번호 입력
-2. 동일 부품의 V1 / V2 / V2.1 이미지 등록
-3. **AI 검사 시작**
-4. RELEASE / HOLD / REVIEW 최종 로트 판정 확인
-5. 판정 사유 확인
-6. V1 BBox / V2·V2.1 Polygon Mask Overlay 증거 확인
-7. 권장 조치 확인
-8. 작업자 최종 승인 및 의견 저장
-9. 승인 기록 JSON 다운로드
-
 ## Main Features
 
 ### 1. Multi-View Inspection
@@ -139,28 +127,18 @@ Seed를 42로 고정하고 이미지를 **Train / Validation / Test = 80 / 10 / 
 재작업 후 재검사, 추가 검사 요청** 중 최종 조치를 선택합니다.
 작업자 의견과 변경 사유를 기록하고, 승인 기록을 JSON으로 다운로드할 수 있습니다.
 
-## System Architecture
 
-```text
-V1 · 상단 이미지
-  └─ 부품 실장 상태 검사
-     └─ Superb AI Deployment · RF-DETR Small (Object Detection)
-        ├─ good_BBBox · 정상 실장
-        └─ no_good_BBox · 실장 이상
+## Inspection Flow
 
-V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
-  └─ 좌우 납땜 접합부 검사
-     └─ FastAPI · YOLO11s-seg (Instance Segmentation)
-        ├─ good · 정상
-        ├─ exc_solder · 과납
-        ├─ poor_solder · 납땜 부족
-        └─ spike · 돌기
-
-V1 / V2 / V2.1 검사 결과
-  └─ LineGate 판정 로직으로 종합
-     └─ AI 권고 · RELEASE / HOLD / REVIEW
-        └─ 작업자가 판정 근거를 검토하고 최종 조치 선택
-```
+1. 생산 라인 및 배치 번호 입력
+2. 동일 부품의 V1 / V2 / V2.1 이미지 등록
+3. **AI 검사 시작**
+4. RELEASE / HOLD / REVIEW 최종 로트 판정 확인
+5. 판정 사유 확인
+6. V1 BBox / V2·V2.1 Polygon Mask Overlay 증거 확인
+7. 권장 조치 확인
+8. 작업자 최종 승인 및 의견 저장
+9. 승인 기록 JSON 다운로드
 
 ## AI Classes
 
@@ -221,6 +199,29 @@ AI 결과는 최종 품질 결정을 자동 확정하는 것이 아니라,
 - **spike**
   - 돌출 형상 및 주변 간섭 가능성 점검
 
+
+## System Architecture
+
+```text
+V1 · 상단 이미지
+  └─ 부품 실장 상태 검사
+     └─ Superb AI Deployment · RF-DETR Small (Object Detection)
+        ├─ good_BBBox · 정상 실장
+        └─ no_good_BBox · 실장 이상
+
+V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
+  └─ 좌우 납땜 접합부 검사
+     └─ FastAPI · YOLO11s-seg (Instance Segmentation)
+        ├─ good · 정상
+        ├─ exc_solder · 과납
+        ├─ poor_solder · 납땜 부족
+        └─ spike · 돌기
+
+V1 / V2 / V2.1 검사 결과
+  └─ LineGate 판정 로직으로 종합
+     └─ AI 권고 · RELEASE / HOLD / REVIEW
+        └─ 작업자가 판정 근거를 검토하고 최종 조치 선택
+```
 
 ## Project Structure
 
