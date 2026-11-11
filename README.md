@@ -32,11 +32,11 @@ V1은 초기 Polygon 기반 Instance Segmentation을 적용했으나, 검사 목
 | `no_good_BBBox` | 139 |
 | **Total** | **268** |
 
-최종 선정된 RF-DETR Small 모델의 성능을 별도의 테스트 데이터 27장을 기준으로 평가한 결과는 다음과 같습니다.
-
 > V1 모델의 학습과 보고서에서는 good_BBBox와 no_good_BBBox를 공식 클래스명으로 사용합니다.
 > 서비스는 Superb AI Deployment 응답에서 클래스명 끝부분(접미사)이 달라져도,
 > 판정 로직에 전달하기 전에 각각 good과 no_good으로 통일합니다.
+
+최종 선정된 RF-DETR Small 모델의 성능을 별도의 테스트 데이터 27장을 기준으로 평가한 결과는 다음과 같습니다.
 
 | Metric | Result |
 |---|---:|
