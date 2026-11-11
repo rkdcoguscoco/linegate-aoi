@@ -339,3 +339,10 @@ python -m streamlit run frontend/app.py
 **Superb AI × BDAI Vision AI Hackathon — TRACK A 제조**
 
 Team **코알라**
+
+### My Contributions
+
+- SMT PCB 이미지 데이터 수집, 라벨링 및 전처리
+- V1/V2/V2.1 검사 결과를 통합하는 RELEASE / HOLD / REVIEW 판정 로직 구현
+- Streamlit 기반 웹 서비스 구현
+- 실험 결과 분석 및 프로젝트 보고서 작성
