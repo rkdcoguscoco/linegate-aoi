@@ -196,9 +196,9 @@ AI 권고는 최종 품질 판정을 자동으로 확정하지 않으며, 작업
 
 ## System Architecture
 
+```text
 Streamlit · 사용자 인터페이스
   └─ 이미지 등록 및 AI 검사 요청
-```text
 V1 · 상단 이미지
   └─ 부품 실장 상태 검사
      └─ Superb AI Deployment · RF-DETR Small (Object Detection)
