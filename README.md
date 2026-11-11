@@ -250,9 +250,9 @@ linegate-aoi/
 | `frontend/__init__.py`                           | `frontend` 디렉터리를 Python 패키지로 인식시키기 위한 파일입니다.                                                                                                                                   |
 | `models/best_yolo11s.pt`                         | **V2/V2.1 최종 납땜 검사 모델 가중치.** 260장의 통합 V2/V2.1 데이터로 학습한 YOLO11s-seg 모델입니다.                                                                                                      |
 | `demo_images/`                                   | LineGate AOI 시연에 사용하는 동일 부품의 V1/V2/V2.1 이미지 세트입니다.                                                                                                                             |
-| `demo_images/case1_v1-hold_v2-hold_v21-hold/`    | V1 실장 상태와 V2/V2.1 납땜 검사에서 모두 HOLD 근거가 발생하는 시연 Case입니다.                                                                                                                         |
-| `demo_images/case2_v1-release_v2-hold_v21-hold/` | V1은 정상이나 V2/V2.1에서 납땜 결함을 발견하여 최종 HOLD가 되는 Multi-View 검사의 필요성을 보여주는 Case입니다.                                                                                                   |
-| `requirements.txt`                               | 프로젝트 실행에 필요한 Python 패키지 목록입니다. Python 3.12 환경을 기준으로 사용합니다.                                                                                                                     |
+| `demo_images/case1_v1-hold_v2-hold_v21-hold/`    | V1 실장 상태와 V2/V2.1 납땜 검사에서 모두 HOLD 근거가 발생하는 시연 이미지 입니다.                                                                                                                         |
+| `demo_images/case2_v1-release_v2-hold_v21-hold/` | V1은 정상이나 V2/V2.1에서 납땜 결함을 발견하여 최종 HOLD가 되는 이미지입니다.                                                                                                |
+| `requirements.txt`                               | Python 3.12 환경에서 프로젝트 실행에 핑요한 패키지 목록입니다.                                                                    |
 | `.gitignore`                                     | API Key, Python cache, 실행 로그 및 생성 결과 등 GitHub에 업로드하지 않아야 할 파일을 제외합니다.                                                                                                          |
 | `README.md`                                      | 프로젝트 개요, 모델 구성, 성능, 판정 기준 및 실행 방법을 설명하는 문서입니다.                                                                                                                                 |
 
