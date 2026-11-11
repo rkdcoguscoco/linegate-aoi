@@ -110,9 +110,6 @@ V2와 V2.1은 동일한 납땜 결함 클래스를 사용하므로, 두 시점�
 | **V1 · Top** | 부품 실장 상태 | RF-DETR Small · Object Detection | Bounding Box + Confidence |
 | **V2 · Left / V2.1 · Right** | 좌우 납땜 접합부 | YOLO11s-seg · Instance Segmentation | Polygon Mask + Confidence |
 
-- **V1** — 정상(`good_BBBox`), 실장 이상(`no_good_BBBox`)
-- **V2 / V2.1** — 정상(`good`), 과납(`exc_solder`), 납땜 부족(`poor_solder`), 돌기(`spike`)
-
 ### 2. AI Decision Support
 
 한 각도에서 결함이 검출돼도 세 각도의 검사를 모두 진행합니다.
