@@ -30,8 +30,8 @@ V1은 초기에는 Polygon 기반 Instance Segmentation으로 학습했으나,
 
 | Class | Annotation |
 |---|---:|
-| `good_BBox` | 129 |
-| `no_good_BBox` | 139 |
+| `good_BBBox` | 129 |
+| `no_good_BBBox` | 139 |
 | **Total** | **268** |
 
 최종 모델은 **RF-DETR Small**이며, 별도 Test Set 27장 기준 성능은 다음과 같습니다.
