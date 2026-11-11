@@ -338,4 +338,3 @@ python -m streamlit run frontend/app.py
 **Superb AI × BDAI Vision AI Hackathon — TRACK A 제조**
 
 Team **코알라**
-⋮⋮⋮⋮⋮⋮⋮⋮
