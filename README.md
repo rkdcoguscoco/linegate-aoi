@@ -16,6 +16,103 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/312392807/633385155
 > 같은 부품을 촬영한 V1 / V2 / V2.1 이미지를 입력한 뒤,
 > AI 검사 → View별 판정 근거 확인 → RELEASE / HOLD / REVIEW 권고 →
 > 작업자 최종 검토 및 승인(Human Approval) 순으로 진행되는 전체 흐름을 시연합니다.
+>
+> ## Final Models
+
+### V1 — RF-DETR Small Object Detection
+
+V1은 초기에는 Polygon 기반 Instance Segmentation으로 학습했으나,
+부품 외곽의 정밀 분할보다 **부품 단위의 정상/이상 판별**이 핵심 목적이라는 점을 반영해
+최종적으로 Bounding Box 기반 Object Detection으로 전환했습니다.
+
+최종 V1 학습 데이터는 다음과 같습니다.
+
+| Class | Annotation |
+|---|---:|
+| `good_BBBox` | 129 |
+| `no_good_BBBox` | 139 |
+| **Total** | **268** |
+
+최종 모델은 **RF-DETR Small**이며, 별도 Test Set 27장 기준 성능은 다음과 같습니다.
+
+| Metric | Result |
+|---|---:|
+| Precision | 81.5% |
+| Recall | 81.5% |
+| F1-score | 81.5% |
+| mAP | 0.658 |
+| mAP@50 | 0.746 |
+| Evaluation Confidence Threshold | 0.56 |
+
+V1 최종 모델 클래스별 성능 지표는 다음과 같습니다.
+
+| Class | Precision | Recall | F1-score | Test Instance |
+|---|---:|---:|---:|---:|
+| `no_good_BBBox` | 90.9% | 71.4% | 80.0% | 14 |
+| `good_BBBox` | 75.0% | 92.3% | 82.8% | 13 |
+
+> V1 모델의 학습과 보고서에서는 good_BBBox와 no_good_BBBox를 공식 클래스명으로 사용합니다.
+> 서비스는 Superb AI Deployment 응답에서 클래스명 끝부분(접미사)이 달라져도,
+> 판정 로직에 전달하기 전에 각각 good과 no_good으로 통일합니다.
+
+### V2 / V2.1 — YOLO11s-seg Instance Segmentation
+
+V2와 V2.1은 동일한 납땜 상태 클래스를 사용합니다. 두 각도의 이미지를 하나의 데이터셋으로 통합하고, 공통 모델인 **YOLO11s-seg**를 학습했습니다.
+
+#### Dataset
+
+이미지 264장 중 유효성 검토를 거쳐 **260장**을 사용했습니다. 전체 데이터셋에는 **627개의 Polygon 어노테이션**이 포함됩니다.
+
+| Class | Polygon Objects |
+|---|---:|
+| `good` | 113 |
+| `exc_solder` | 238 |
+| `poor_solder` | 118 |
+| `spike` | 158 |
+| **Total** | **627** |
+
+Seed를 42로 고정하고 이미지를 **Train / Validation / Test = 80 / 10 / 10**으로 분할했습니다.
+
+| Split | Images |
+|---|---:|
+| Train | 208 |
+| Validation | 26 |
+| Test | 26 |
+| **Total** | **260** |
+
+#### Test Results
+
+**전체 Test Set 26장**을 기준으로 평가한 Mask 성능입니다.
+
+| Metric | Result |
+|---|---:|
+| Mask Precision | 0.810 |
+| Mask Recall | 0.820 |
+| Mask mAP50 | 0.861 |
+| Mask mAP50–95 | 0.689 |
+
+기준 모델인 YOLO11n-seg와 비교해 Mask Precision은 소폭 낮아졌지만, **Mask Recall은 0.640에서 0.820으로 높아졌고** Mask mAP50–95도 개선되었습니다. 납땜 이상을 놓치는 경우를 줄이기 위해 재현율 개선을 우선해 YOLO11s-seg를 최종 모델로 선정했습니다.
+
+#### Results by View
+
+동일한 최종 모델을 사용해 Test Set을 **V2 11장**과 **V2.1 15장**으로 나누어 각각 평가했습니다.
+
+| View | Images | Mask Precision | Mask Recall | Mask mAP50 | Mask mAP50–95 |
+|---|---:|---:|---:|---:|---:|
+| V2 | 11 | 93.22% | 83.81% | 90.61% | 70.65% |
+| V2.1 | 15 | 91.63% | 86.24% | 95.25% | 79.53% |
+
+## Inspection Flow
+
+1. 생산 라인 및 배치 번호 입력
+2. 동일 부품의 V1 / V2 / V2.1 이미지 등록
+3. **AI 검사 시작**
+4. RELEASE / HOLD / REVIEW 최종 로트 판정 확인
+5. 판정 사유 확인
+6. V1 BBox / V2·V2.1 Polygon Mask Overlay 증거 확인
+7. 권장 조치 확인
+8. 작업자 최종 승인 및 의견 저장
+9. 승인 기록 JSON 다운로드
 
 ## Main Features
 
@@ -123,90 +220,6 @@ AI 결과는 최종 품질 결정을 자동 확정하는 것이 아니라,
 - **spike**
   - 돌출 형상 및 주변 간섭 가능성 점검
 
-## Final Models
-
-### V1 — RF-DETR Small Object Detection
-
-V1은 초기에는 Polygon 기반 Instance Segmentation으로 학습했으나,
-부품 외곽의 정밀 분할보다 **부품 단위의 정상/이상 판별**이 핵심 목적이라는 점을 반영해
-최종적으로 Bounding Box 기반 Object Detection으로 전환했습니다.
-
-최종 V1 학습 데이터는 다음과 같습니다.
-
-| Class | Annotation |
-|---|---:|
-| `good_BBBox` | 129 |
-| `no_good_BBBox` | 139 |
-| **Total** | **268** |
-
-최종 모델은 **RF-DETR Small**이며, 별도 Test Set 27장 기준 성능은 다음과 같습니다.
-
-| Metric | Result |
-|---|---:|
-| Precision | 81.5% |
-| Recall | 81.5% |
-| F1-score | 81.5% |
-| mAP | 0.658 |
-| mAP@50 | 0.746 |
-| Evaluation Confidence Threshold | 0.56 |
-
-V1 최종 모델 클래스별 성능 지표는 다음과 같습니다.
-
-| Class | Precision | Recall | F1-score | Test Instance |
-|---|---:|---:|---:|---:|
-| `no_good_BBBox` | 90.9% | 71.4% | 80.0% | 14 |
-| `good_BBBox` | 75.0% | 92.3% | 82.8% | 13 |
-
-> V1 모델의 학습과 보고서에서는 good_BBBox와 no_good_BBBox를 공식 클래스명으로 사용합니다.
-> 서비스는 Superb AI Deployment 응답에서 클래스명 끝부분(접미사)이 달라져도,
-> 판정 로직에 전달하기 전에 각각 good과 no_good으로 통일합니다.
-
-### V2 / V2.1 — YOLO11s-seg Instance Segmentation
-
-V2와 V2.1은 동일한 납땜 상태 클래스를 사용합니다. 두 각도의 이미지를 하나의 데이터셋으로 통합하고, 공통 모델인 **YOLO11s-seg**를 학습했습니다.
-
-#### Dataset
-
-이미지 264장 중 유효성 검토를 거쳐 **260장**을 사용했습니다. 전체 데이터셋에는 **627개의 Polygon 어노테이션**이 포함됩니다.
-
-| Class | Polygon Objects |
-|---|---:|
-| `good` | 113 |
-| `exc_solder` | 238 |
-| `poor_solder` | 118 |
-| `spike` | 158 |
-| **Total** | **627** |
-
-Seed를 42로 고정하고 이미지를 **Train / Validation / Test = 80 / 10 / 10**으로 분할했습니다.
-
-| Split | Images |
-|---|---:|
-| Train | 208 |
-| Validation | 26 |
-| Test | 26 |
-| **Total** | **260** |
-
-#### Test Results
-
-**전체 Test Set 26장**을 기준으로 평가한 Mask 성능입니다.
-
-| Metric | Result |
-|---|---:|
-| Mask Precision | 0.810 |
-| Mask Recall | 0.820 |
-| Mask mAP50 | 0.861 |
-| Mask mAP50–95 | 0.689 |
-
-기준 모델인 YOLO11n-seg와 비교해 Mask Precision은 소폭 낮아졌지만, **Mask Recall은 0.640에서 0.820으로 높아졌고** Mask mAP50–95도 개선되었습니다. 납땜 이상을 놓치는 경우를 줄이기 위해 재현율 개선을 우선해 YOLO11s-seg를 최종 모델로 선정했습니다.
-
-#### Results by View
-
-동일한 최종 모델을 사용해 Test Set을 **V2 11장**과 **V2.1 15장**으로 나누어 각각 평가했습니다.
-
-| View | Images | Mask Precision | Mask Recall | Mask mAP50 | Mask mAP50–95 |
-|---|---:|---:|---:|---:|---:|
-| V2 | 11 | 93.22% | 83.81% | 90.61% | 70.65% |
-| V2.1 | 15 | 91.63% | 86.24% | 95.25% | 79.53% |
 
 ## Project Structure
 
@@ -308,17 +321,6 @@ python -m streamlit run frontend/app.py
 
 브라우저에서 Streamlit 화면이 열리면 실행 완료입니다.
 
-## Inspection Flow
-
-1. 생산 라인 및 배치 번호 입력
-2. 동일 부품의 V1 / V2 / V2.1 이미지 등록
-3. **AI 검사 시작**
-4. RELEASE / HOLD / REVIEW 최종 로트 판정 확인
-5. 판정 사유 확인
-6. V1 BBox / V2·V2.1 Polygon Mask Overlay 증거 확인
-7. 권장 조치 확인
-8. 작업자 최종 승인 및 의견 저장
-9. 승인 기록 JSON 다운로드
 
 ## Demo Data
 
