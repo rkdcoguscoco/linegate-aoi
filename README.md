@@ -199,19 +199,20 @@ AI 권고는 최종 품질 판정을 자동으로 확정하지 않으며, 작업
 ```text
 Streamlit · 사용자 인터페이스
   └─ 이미지 등록 및 AI 검사 요청
-V1 · 상단 이미지
-  └─ 부품 실장 상태 검사
-     └─ Superb AI Deployment · RF-DETR Small (Object Detection)
-        ├─ good_BBBox · 정상 실장
-        └─ no_good_BBox · 실장 이상
-
-V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
-  └─ 좌우 납땜 접합부 검사
-     └─ FastAPI · YOLO11s-seg (Instance Segmentation)
-        ├─ good · 정상
-        ├─ exc_solder · 과납
-        ├─ poor_solder · 납땜 부족
-        └─ spike · 돌기
+     │
+     ├─ V1 · 상단 이미지
+     │   └─ 부품 실장 상태 검사
+     │      └─ Superb AI Deployment · RF-DETR Small (Object Detection)
+     │         ├─ good_BBBox · 정상 실장
+     │         └─ no_good_BBBox · 실장 이상
+     │
+     └─ V2 · 좌측 경사 이미지 / V2.1 · 우측 경사 이미지
+         └─ 좌우 납땜 접합부 검사
+            └─ FastAPI · YOLO11s-seg (Instance Segmentation)
+               ├─ good · 정상
+               ├─ exc_solder · 과납
+               ├─ poor_solder · 납땜 부족
+               └─ spike · 돌기
 
 V1 / V2 / V2.1 검사 결과
   └─ LineGate 판정 로직으로 종합
