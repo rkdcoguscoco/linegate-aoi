@@ -133,9 +133,9 @@ V2와 V2.1은 동일한 납땜 결함 클래스를 사용하므로, 두 시점�
 3. **AI 검사 시작**
 4. RELEASE / HOLD / REVIEW 최종 로트 판정 확인
 5. 판정 사유 확인
-6. V1 BBox / V2·V2.1 Polygon Mask Overlay 증거 확인
-7. 권장 조치 확인
-8. 작업자 최종 승인 및 의견 저장
+6. V1 BBox / V2·V2.1 Polygon Mask Overlay 확인
+7. 결함 유형에 따른 권장 조치 확인
+8. 작업자 최종 조치 선택 및 의견 저장
 9. 승인 기록 JSON 다운로드
 
 ## AI Classes
